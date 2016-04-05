@@ -11,7 +11,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <script src="../bower_components/page/page.js"></script>
 <script>
   window.addEventListener('WebComponentsReady', function() {
-
+    // Temporary set up of our test data, this will help us dynamically create our routes
+    var apps = [
+            {name: 'Tree', url: 'tree', passed: true, tests: [
+              {name: 'it should pass this one', passed: true, stacktrace: null},
+              {name: 'it was good here too', passed: true, stacktrace: null},
+              {name: 'it had another good one', passed: true, stacktrace: null}
+            ]},
+            {name: 'Memories', url: 'memories', passed: true, tests: [
+              {name: 'it should pass this one', passed: true, stacktrace: null},
+              {name: 'it was good here too', passed: true, stacktrace: null},
+              {name: 'it had another good one', passed: true, stacktrace: null}
+            ]},
+            {name: 'Ask', url: 'ask', passed: true, tests: [
+              {name: 'it should pass this one', passed: true, stacktrace: null},
+              {name: 'it was good here too', passed: true, stacktrace: null},
+              {name: 'it had another good one', passed: true, stacktrace: null}
+            ]},
+            {name: 'Some App', url: 'some_app', passed: false, tests: [
+              {name: 'it should pass this one', passed: true, stacktrace: null},
+              {name: 'it did not pass this one', passed: false, stacktrace: 'Here\'s a simple stack trace on what went wrong, Blah blah blah...'},
+              {name: 'it had another good one', passed: true, stacktrace: null}
+            ]},
+            {name: 'Some Other App', url: 'some_other_app', passed: true, tests: [
+              {name: 'it should pass this one', passed: true, stacktrace: null},
+              {name: 'it was good here too', passed: true, stacktrace: null},
+              {name: 'it had another good one', passed: true, stacktrace: null}
+            ]},
+            {name: 'Cool App Name Here', url: 'cool_app_name_here', passed: false, tests: [
+              {name: 'it did not pass this one', passed: false, stacktrace: 'Here\'s a simple stack trace on what went wrong, Blah blah blah...'},
+              {name: 'it was good here too', passed: true, stacktrace: null},
+              {name: 'it failed this one as well :(', passed: false, stacktrace: 'Here\'s a simple stack trace on what went wrong, Blah blah blah...'}
+            ]}
+          ];
+          
     // We use Page.js for routing. This is a Micro
     // client-side router inspired by the Express router
     // More info: https://visionmedia.github.io/page.js/
@@ -51,20 +84,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       setFocus(app.route);
     });
 
-    page('/users', function() {
-      app.route = 'users';
+    page('/howto', function() {
+      app.route = 'howto';
       setFocus(app.route);
     });
-
-    page('/users/:name', function(data) {
-      app.route = 'user-info';
-      app.params = data.params;
-      setFocus(app.route);
-    });
-
-    page('/contact', function() {
-      app.route = 'contact';
-      setFocus(app.route);
+    
+    apps.forEach(function(item) {
+      page('/'+item.url, function() {
+        app.route = item.url;
+      });
     });
 
     // 404
@@ -75,9 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     // add #! before urls
-    page({
-      hashbang: true
-    });
+    page();
 
   });
 </script>
