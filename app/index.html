@@ -91,12 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <hr>
           <template is="dom-repeat" items="{{apps}}">
             <a data-route="{{item.url}}" href="{{item.url}}">
-                <template is="dom-if" if="{{item.passed}}">
-                  <iron-icon class="passed" icon="icons:done-all"></iron-icon>
-                </template>
-                <template is="dom-if" if="{{!item.passed}}">
-                  <iron-icon class="failed" icon="icons:clear"></iron-icon>
-                </template>
+                <iron-icon class$="{{item.status}}" icon="{{item.icon}}"></iron-icon>
                 <span>{{item.name}}</span>
             </a>
           </template>
@@ -143,16 +138,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <h2 class="page-title">{{item.name}}</h2>
                 <template is="dom-repeat" items="{{item.tests}}">
                   <paper-material elevation="1">
-                    <template is="dom-if" if="{{item.passed}}">
-                      <iron-icon class="passed" icon="icons:done"></iron-icon>
-                    </template>
-                    <template is="dom-if" if="{{!item.passed}}">
-                      <iron-icon class="failed" icon="icons:clear"></iron-icon>
-                    </template>
+                    <iron-icon class$="{{item.status}}" icon="{{item.icon}}"></iron-icon>
                     <h3 class="sub-title">{{item.name}}</h3>
-                    <template is="dom-if" if="{{item.stacktrace}}">
-                      <p class="stacktrace">{{item.stacktrace}}</p>
-                    </template>
+                    <p class="stacktrace">{{item.stacktrace}}</p>
                   </paper-material>
                 </template>
               </section>
@@ -190,42 +178,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
-  
+  <script src="scripts/data.js"></script>
   <script>
     var app = document.querySelector('#app');
     app.addEventListener('dom-change', function() {
-      this.apps = [
-            {name: 'Tree', url: 'tree', passed: true, tests: [
-              {name: 'it should pass this one', passed: true, stacktrace: null},
-              {name: 'it was good here too', passed: true, stacktrace: null},
-              {name: 'it had another good one', passed: true, stacktrace: null}
-            ]},
-            {name: 'Memories', url: 'memories', passed: true, tests: [
-              {name: 'it should pass this one', passed: true, stacktrace: null},
-              {name: 'it was good here too', passed: true, stacktrace: null},
-              {name: 'it had another good one', passed: true, stacktrace: null}
-            ]},
-            {name: 'Ask', url: 'ask', passed: true, tests: [
-              {name: 'it should pass this one', passed: true, stacktrace: null},
-              {name: 'it was good here too', passed: true, stacktrace: null},
-              {name: 'it had another good one', passed: true, stacktrace: null}
-            ]},
-            {name: 'Some App', url: 'some_app', passed: false, tests: [
-              {name: 'it should pass this one', passed: true, stacktrace: null},
-              {name: 'it did not pass this one', passed: false, stacktrace: 'Here\'s a simple stack trace on what went wrong, Blah blah blah...'},
-              {name: 'it had another good one', passed: true, stacktrace: null}
-            ]},
-            {name: 'Some Other App', url: 'some_other_app', passed: true, tests: [
-              {name: 'it should pass this one', passed: true, stacktrace: null},
-              {name: 'it was good here too', passed: true, stacktrace: null},
-              {name: 'it had another good one', passed: true, stacktrace: null}
-            ]},
-            {name: 'Cool App Name Here', url: 'cool_app_name_here', passed: false, tests: [
-              {name: 'it did not pass this one', passed: false, stacktrace: 'Here\'s a simple stack trace on what went wrong, Blah blah blah...'},
-              {name: 'it was good here though', passed: true, stacktrace: null},
-              {name: 'it failed this one as well :(', passed: false, stacktrace: 'Here\'s a simple stack trace on what went wrong, Blah blah blah...'}
-            ]}
-          ];
+      this.apps = getData();
     });
   </script>
   
